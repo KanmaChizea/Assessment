@@ -1,4 +1,7 @@
-import {NavigatorScreenParams} from '@react-navigation/native';
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
@@ -26,6 +29,12 @@ export type AppStackParamList = {
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, T>;
 export type LoginStackScreenProps<T extends keyof LoginStackParamList> =
-  NativeStackScreenProps<LoginStackParamList, T>;
+  CompositeScreenProps<
+    NativeStackScreenProps<LoginStackParamList, T>,
+    RootStackScreenProps<keyof RootStackParamList>
+  >;
 export type AppStackScreenProps<T extends keyof AppStackParamList> =
-  NativeStackScreenProps<AppStackParamList, T>;
+  CompositeScreenProps<
+    NativeStackScreenProps<AppStackParamList, T>,
+    RootStackScreenProps<keyof RootStackParamList>
+  >;

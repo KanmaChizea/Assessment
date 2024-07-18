@@ -1,10 +1,25 @@
 import {StyleSheet} from 'react-native';
+import {AppColors} from './colors';
 
 export const AppTextstyles = StyleSheet.create({
+  heading: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: AppColors.black,
+  },
+  subheading: {
+    fontSize: 12,
+    color: AppColors.subtext,
+  },
+  body: {fontSize: 14, color: AppColors.black},
+  bodySmall: {
+    fontSize: 12,
+    color: AppColors.black,
+  },
   h1: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333333',
+    fontSize: 16,
+    fontWeight: '600',
+    color: AppColors.black,
   },
   h2: {
     fontSize: 22,
@@ -55,10 +70,7 @@ export const AppTextstyles = StyleSheet.create({
     fontWeight: '500',
     color: '#333333',
   },
-  bodySmall: {
-    fontSize: 14,
-    color: '#333333',
-  },
+
   caption: {
     fontSize: 12,
     color: '#666666',

@@ -2,7 +2,7 @@ import {StyleSheet, Switch, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import ListTile from '../components/shared/list_tiile';
 import AppTextstyles from '../styles/textstyles';
-import {AppColors} from '../styles';
+import {AppColors} from '../styles/colors';
 import {BiometricIcon, LockIcon, LogoutIcon, ManageIcon} from '../assets';
 import {useAppDispatch} from '../redux/hooks';
 import {logout} from '../redux/user';

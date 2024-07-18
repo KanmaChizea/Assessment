@@ -6,7 +6,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {AppColors} from '../../styles';
+import {AppColors} from '../../styles/colors';
 import AppTextstyles from '../../styles/textstyles';
 
 interface InputFieldProps {

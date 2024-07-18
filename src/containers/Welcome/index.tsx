@@ -10,7 +10,7 @@ import React from 'react';
 import {RootStackScreenProps} from '../../navigation/stack_types';
 import {Button} from '../../components/Buttons';
 import {Spacer} from '../../components/spacer';
-import {AppColors} from '../../styles';
+import AppTextstyles from '../../styles/textstyles';
 
 export const WelcomeScreen = ({
   navigation,
@@ -72,13 +72,10 @@ const styles = StyleSheet.create({
   },
   headerText: {
     textAlign: 'center',
-    fontWeight: '600',
-    fontSize: 18,
-    color: AppColors.black,
+    ...AppTextstyles.heading,
   },
   subText: {
     textAlign: 'center',
-    fontSize: 12,
-    color: AppColors.subtext,
+    ...AppTextstyles.subheading,
   },
 });

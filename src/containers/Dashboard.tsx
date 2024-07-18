@@ -13,15 +13,11 @@ import {dashboardActions} from '../constants/actions';
 import {DashboardActionCard} from '../components/dashboard/dashboard_action_card';
 import AccountCard from '../components/dashboard/account_card';
 import {useAppSelector} from '../redux/hooks';
-import {selectAccounts} from '../redux/accounts';
-import {
-  AddNewAccount,
-  AddNewAccountButton,
-} from '../components/dashboard/add_new_account';
 import {useNavigation} from '@react-navigation/native';
+import {getAccounts} from '../redux/user';
 
 const Dashboard = () => {
-  const myAccounts = useAppSelector(selectAccounts);
+  const myAccounts = useAppSelector(getAccounts);
   const [modalVisible, setModalVisible] = useState(false);
   const navigator = useNavigation();
   return (
@@ -34,7 +30,7 @@ const Dashboard = () => {
         <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
           <View style={styles.modalOverlay} />
         </TouchableWithoutFeedback>
-        <AddNewAccount closeModal={() => setModalVisible(false)} />
+        {/* <AddNewAccount closeModal={() => setModalVisible(false)} /> */}
       </Modal>
       <Text style={styles.accountsText}>My Accounts</Text>
       <FlatList
@@ -46,9 +42,9 @@ const Dashboard = () => {
         ListEmptyComponent={
           <Text>No account associated with this account</Text>
         }
-        ListFooterComponent={
-          <AddNewAccountButton onPress={() => setModalVisible(true)} />
-        }
+        // ListFooterComponent={
+        //   <AddNewAccountButton onPress={() => setModalVisible(true)} />
+        // }
       />
       <View style={{paddingTop: 64}}></View>
       <Text style={styles.accountsText}>Quick Actions</Text>

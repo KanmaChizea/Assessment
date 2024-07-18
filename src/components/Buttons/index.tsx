@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   ColorValue,
   StyleProp,
   StyleSheet,
@@ -7,7 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import React from 'react';
-import {AppColors} from '../../styles';
+import {AppColors} from '../../styles/colors';
 import {PressableOpacity} from '../../components/Buttons/PressableOpacity';
 
 export type ButtonProps = {
@@ -20,6 +21,7 @@ export type ButtonProps = {
   style?: StyleProp<ViewStyle>;
   buttonStyle?: StyleProp<ViewStyle>;
   outline?: boolean;
+  isLoading?: boolean;
 };
 export const Button = ({
   text,
@@ -31,6 +33,7 @@ export const Button = ({
   style,
   buttonStyle,
   outline = false,
+  isLoading = false,
 }: ButtonProps) => {
   const backgroundColor = color || AppColors.primary;
   return (
@@ -46,13 +49,22 @@ export const Button = ({
         ]}
         activeOpacity={disabled ? 1 : undefined}
         onPress={disabled ? null : onPress}>
-        <Text
-          style={[
-            styles.textstyle,
-            {color: textColor || (outline ? backgroundColor : AppColors.white)},
-          ]}>
-          {text ?? ''}
-        </Text>
+        {isLoading ? (
+          <ActivityIndicator
+            color={outline ? backgroundColor : AppColors.white}
+          />
+        ) : (
+          <Text
+            style={[
+              styles.textstyle,
+              {
+                color:
+                  textColor || (outline ? backgroundColor : AppColors.white),
+              },
+            ]}>
+            {text ?? ''}
+          </Text>
+        )}
       </PressableOpacity>
     </View>
   );

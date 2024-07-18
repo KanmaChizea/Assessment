@@ -17,6 +17,10 @@ import LogoutIcon from './logout.svg';
 import FingerprintIcon from './fingerprint.svg';
 import BiometricIcon from './biometric.svg';
 import AddAccountIcon from './hand-money.svg';
+import Visibility from './visibility.svg';
+import VisibilityOff from './visibility_off.svg';
+import SuccessIcon from './success.svg';
+import ErrorIcon from './error.svg';
 
 export {
   Logo,
@@ -38,4 +42,8 @@ export {
   LogoutIcon,
   BiometricIcon,
   AddAccountIcon,
+  Visibility,
+  VisibilityOff,
+  SuccessIcon,
+  ErrorIcon,
 };
