@@ -15,7 +15,7 @@ const HelpScreen = () => {
       <View style={styles.bodyContainer}>
         <View style={styles.greetingContainer}>
           <Image
-            source={require('../../assets/images/assistant.png')}
+            source={require('../../Assets/images/assistant.png')}
             style={styles.image}
           />
           <Text style={styles.greetingText}>{'Hello, ' + user}</Text>
