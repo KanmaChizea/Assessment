@@ -12,6 +12,7 @@ export const AppTextstyles = StyleSheet.create({
     color: AppColors.subtext,
   },
   body: {fontSize: 14, color: AppColors.black},
+  bodyMedium: {fontSize: 14, fontWeight: '600', color: AppColors.black},
   bodySmall: {
     fontSize: 12,
     color: AppColors.black,

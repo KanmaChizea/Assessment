@@ -54,7 +54,7 @@ export const rtkQueryService = createApi({
         url: 'users/',
         method: 'POST',
         body: {
-          fullname: data.fullname,
+          fullName: data.fullname,
           username: data.username,
           password: data.password,
           accounts: [
@@ -74,11 +74,11 @@ export const rtkQueryService = createApi({
       transformErrorResponse: _ => {
         return {
           isSuccess: false,
-          errorMessage: 'Error logging in',
+          errorMessage: 'Could not create new user',
         };
       },
     }),
-    addNewAccount: builder.mutation<RequestResult<void>, AddAccountProps>({
+    addNewAccount: builder.mutation<RequestResult<User>, AddAccountProps>({
       query: data => ({
         url: 'users/' + data.user.id,
         method: 'PUT',
@@ -95,7 +95,20 @@ export const rtkQueryService = createApi({
           ],
         },
       }),
+      transformResponse: (response: User) => {
+        return {
+          isSuccess: true,
+          data: response,
+        };
+      },
+      transformErrorResponse: _ => {
+        return {
+          isSuccess: false,
+          errorMessage: 'Could not update account',
+        };
+      },
     }),
   }),
 });
-export const {useLoginMutation, useSigupMutation} = rtkQueryService;
+export const {useLoginMutation, useSigupMutation, useAddNewAccountMutation} =
+  rtkQueryService;

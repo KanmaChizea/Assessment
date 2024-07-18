@@ -1,6 +1,7 @@
 import React from 'react';
 import {Visibility, VisibilityOff} from '../../assets/svgs';
 import {PressableOpacity} from '../Buttons/PressableOpacity';
+import {AppColors} from '../../styles/colors';
 
 type Props = {
   hidden: boolean;
@@ -8,6 +9,10 @@ type Props = {
 };
 export const VisibilityIcon = ({hidden, toggleHidden}: Props) => (
   <PressableOpacity onPress={toggleHidden}>
-    {hidden ? <VisibilityOff /> : <Visibility />}
+    {hidden ? (
+      <VisibilityOff style={{color: AppColors.subtext}} />
+    ) : (
+      <Visibility style={{color: AppColors.subtext}} />
+    )}
   </PressableOpacity>
 );

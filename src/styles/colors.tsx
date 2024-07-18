@@ -5,7 +5,7 @@ export const AppColors = {
   subtext: '#454242',
   secondary: '#DC6A2D',
   error: '#DC4437',
-  grey100: '#F5F4F4',
+  grey100: '#D3D3D3',
   grey200: '#E2E1E1',
   grey300: '#9EA6B7',
   titleText: '#333333',

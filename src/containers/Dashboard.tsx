@@ -1,66 +1,88 @@
-import {
-  FlatList,
-  Keyboard,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-import React, {useState} from 'react';
+import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import React, {useRef, useState} from 'react';
 import AppTextstyles from '../styles/textstyles';
 import {dashboardActions} from '../constants/actions';
-import {DashboardActionCard} from '../components/dashboard/dashboard_action_card';
-import AccountCard from '../components/dashboard/account_card';
 import {useAppSelector} from '../redux/hooks';
-import {useNavigation} from '@react-navigation/native';
-import {getAccounts} from '../redux/user';
+import {getAccounts, getUserFullname} from '../redux/user';
+import {AppStackScreenProps} from '../navigation/stack_types';
+import {getInitials} from '../services/utils';
+import {AppColors} from '../styles/colors';
+import {LogoutIcon} from '../assets';
+import {PressableOpacity} from '../components/Buttons/PressableOpacity';
+import {Spacer} from '../components/spacer';
+import {CarouselDots} from '../components/CarouselDots';
+import {useCarousel} from '../hooks/carousel';
+import {CommonActions} from '@react-navigation/native';
+import AccountCard from '../components/AccountBalanceCard';
+import {DashboardActionCard} from '../components/DashboardActionCard';
 
-const Dashboard = () => {
+const spacer = () => <Spacer width={24} />;
+const Dashboard = ({navigation}: AppStackScreenProps<'Dashboard'>) => {
+  const name = useAppSelector(getUserFullname);
   const myAccounts = useAppSelector(getAccounts);
-  const [modalVisible, setModalVisible] = useState(false);
-  const navigator = useNavigation();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const flatList = useRef<FlatList>(null);
+  const {onLayout, onMomentumScrollEnd, size} = useCarousel(
+    flatList,
+    activeIndex,
+    setActiveIndex,
+  );
+  const logout = () => {
+    navigation.dispatch(
+      CommonActions.reset({
+        routes: [
+          {name: 'Welcome'},
+          {name: 'LoginStack', params: {screen: 'Login'}},
+        ],
+      }),
+    );
+  };
+
   return (
-    <View style={styles.container}>
-      <Modal
-        visible={modalVisible}
-        animationType="fade"
-        transparent={true}
-        onRequestClose={() => setModalVisible(!modalVisible)}>
-        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-          <View style={styles.modalOverlay} />
-        </TouchableWithoutFeedback>
-        {/* <AddNewAccount closeModal={() => setModalVisible(false)} /> */}
-      </Modal>
-      <Text style={styles.accountsText}>My Accounts</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.appBar}>
+        <View style={styles.row}>
+          <View style={styles.initialsContainer}>
+            <Text style={styles.initials}>{getInitials(name)}</Text>
+          </View>
+          <Text style={AppTextstyles.bodyMedium}>{`Hello ${name}`}</Text>
+        </View>
+        <PressableOpacity onPress={logout}>
+          <LogoutIcon />
+        </PressableOpacity>
+      </View>
       <FlatList
-        keyExtractor={(_, index) => index.toString()}
+        ref={flatList}
         data={myAccounts}
-        horizontal={true}
+        horizontal
+        pagingEnabled
+        bounces={false}
         showsHorizontalScrollIndicator={false}
+        onLayout={onLayout}
+        snapToInterval={size.width + 24}
+        onMomentumScrollEnd={onMomentumScrollEnd}
+        initialNumToRender={myAccounts.length}
+        keyExtractor={item => item.accountNumber}
+        ItemSeparatorComponent={spacer}
         renderItem={({item}) => <AccountCard account={item} />}
         ListEmptyComponent={
           <Text>No account associated with this account</Text>
         }
-        // ListFooterComponent={
-        //   <AddNewAccountButton onPress={() => setModalVisible(true)} />
-        // }
       />
-      <View style={{paddingTop: 64}}></View>
+      {myAccounts.length > 0 && (
+        <CarouselDots activeIndex={activeIndex} length={myAccounts.length} />
+      )}
+      <Spacer height={27} />
       <Text style={styles.accountsText}>Quick Actions</Text>
       <FlatList
-        keyExtractor={(item, index) => item.id}
         data={dashboardActions}
         renderItem={({item}) => (
-          <DashboardActionCard
-            action={item}
-            onPress={() => navigator.navigate(item.route as never)}
-          />
+          <DashboardActionCard action={item} onPress={() => {}} />
         )}
         numColumns={3}
         columnWrapperStyle={styles.columnWrapper}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -69,22 +91,36 @@ export default Dashboard;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
+    paddingVertical: 24,
   },
   accountsText: {
     ...AppTextstyles.h5,
     paddingBottom: 28,
   },
-
+  initials: {
+    ...AppTextstyles.bodyMedium,
+    color: AppColors.primary,
+  },
+  initialsContainer: {
+    marginRight: 8,
+    borderRadius: 100,
+    width: 30,
+    height: 30,
+    backgroundColor: '#FFDFDF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   columnWrapper: {
     justifyContent: 'space-between',
     paddingHorizontal: 12, // Add horizontal spacing between items
   },
-  modalOverlay: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+  appBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 36,
   },
 });
