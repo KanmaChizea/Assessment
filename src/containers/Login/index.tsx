@@ -48,11 +48,14 @@ export const LoginScreen = ({navigation}: LoginStackScreenProps<'Login'>) => {
   const [loginApi] = useLoginMutation();
 
   const loginWithBiometrics = async () => {
-    const result = await EncryptedStorage.getItem('login_data');
-    if (result !== null) {
+    try {
+      const result = await EncryptedStorage.getItem('login_data');
+      if (result === null) {
+        throw new Error();
+      }
       const user = JSON.parse(result);
       login({username: user.username, password: user.password});
-    } else {
+    } catch (e) {
       showModal(ErrorModal, {
         text: 'You have to login at least once to use biometrics',
       });

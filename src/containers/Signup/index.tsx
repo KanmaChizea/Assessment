@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   ScrollView,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useAppDispatch} from '../../redux/hooks';
@@ -85,7 +86,9 @@ export const SignupScreen = ({navigation}: LoginStackScreenProps<'Signup'>) => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <SafeAreaView>

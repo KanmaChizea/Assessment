@@ -2,7 +2,7 @@ import {StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {FingerprintIcon} from '../../assets';
 import {AppColors} from '../../styles/colors';
-import ReactNativeBiometrics, {BiometryTypes} from 'react-native-biometrics';
+import ReactNativeBiometrics from 'react-native-biometrics';
 import {useModal} from '../../hooks/useModal';
 import ErrorModal from '../Modal';
 
@@ -11,18 +11,13 @@ const BiometricsButton = ({onPress}: {onPress: () => void}) => {
   const {showModal} = useModal();
 
   const validateBiometrics = async () => {
-    const {available, biometryType, error} =
-      await rnBiometrics.isSensorAvailable();
+    const {available, error} = await rnBiometrics.isSensorAvailable();
     if (error) {
       showModal(ErrorModal, {
-        text: 'No biometrics on thie device',
+        text: 'No biometrics on this device',
       });
     }
-    if (
-      available &&
-      (biometryType === BiometryTypes.Biometrics ||
-        biometryType === BiometryTypes.TouchID)
-    ) {
+    if (available) {
       await rnBiometrics
         .simplePrompt({promptMessage: 'Biometric Login'})
         .then(result => {

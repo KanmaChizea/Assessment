@@ -39,8 +39,8 @@ const Dashboard = ({navigation}: AppStackScreenProps<'Dashboard'>) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.appBar}>
+    <View style={styles.container}>
+      <SafeAreaView style={styles.appBar}>
         <View style={styles.row}>
           <View style={styles.initialsContainer}>
             <Text style={styles.initials}>{getInitials(name)}</Text>
@@ -50,7 +50,7 @@ const Dashboard = ({navigation}: AppStackScreenProps<'Dashboard'>) => {
         <PressableOpacity onPress={logout}>
           <LogoutIcon />
         </PressableOpacity>
-      </View>
+      </SafeAreaView>
       <FlatList
         ref={flatList}
         data={myAccounts}
@@ -82,7 +82,7 @@ const Dashboard = ({navigation}: AppStackScreenProps<'Dashboard'>) => {
         numColumns={3}
         columnWrapperStyle={styles.columnWrapper}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

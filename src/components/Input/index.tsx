@@ -61,7 +61,6 @@ export const RenderBaseInput = ({
 
   const baseInputStyles = [
     stylesInput.baseContainer,
-    {paddingHorizontal: 16},
     !!error && showErrorBorder && stylesInput.error,
     isFocused && stylesInput.bordered,
     !editable && stylesInput.disabled,
@@ -118,11 +117,11 @@ export const InputField = (props: InputFieldProps) => {
 
 const stylesInput = StyleSheet.create({
   baseContainer: {
-    position: 'relative',
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
+    paddingHorizontal: 12,
   },
   bordered: {
     borderWidth: 2,
@@ -131,6 +130,7 @@ const stylesInput = StyleSheet.create({
   baseTextInput: {
     flex: 1,
     ...AppTextstyles.body,
+    paddingVertical: 12,
   },
   error: {
     borderWidth: 2,
